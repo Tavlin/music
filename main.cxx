@@ -11,9 +11,8 @@ int main(int argc, char* argv[]){
   cout << "Welcome to the musiclist program!" << endl;
   while(status){
     cout << "Please choose what you want to do:" << endl;
-    cout << "Type help for help, or any other command you which to execute." << endl << endl;
+    cout << "Type help for help, or any other command you wish to execute." << endl << endl;
     getline(cin, input);
-    cout << endl << "You chose: " << input << " as input" << endl << endl;
     if(input == "exit" || input == "Exit"){
       break;
     }
@@ -22,9 +21,6 @@ int main(int argc, char* argv[]){
     }
     if(input == "creat list" || input == "new list"){
       new_list();
-    }
-    else{
-      cout << "What oO? Please check your input and try again." << endl;
     }
   }
   return 0;

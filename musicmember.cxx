@@ -48,17 +48,23 @@ void search_genre(vector<Musicmember> list, string searched_genre)
     }
   }
 }
+
 /*******************************************************************************
 function to print out all possible commands in the shell to the user.
 *******************************************************************************/
 void print_commands(){
+  cout << "type: \"new list\" to start a new list." << endl;
+  cout << "\"creat list\" to start a new list works too." << endl;
   cout << "type: \"genre\" to search for a specific genre." << endl;
   cout << "type: \"band\" to search for a band." << endl;
   cout << "type: \"song\" to search for a specific song." << endl;
-  cout << "type: \"album\" to search for a specific album." << endl << endl;
+  cout << "type: \"album\" to search for a specific album." << endl;
 };
 
-
+/*******************************************************************************
+  function to initialize a new music list.
+  maybe needs to be splitted in to seperate functions
+*******************************************************************************/
 vector<Musicmember> new_list(){
 
   vector<Musicmember> newlist;
@@ -85,6 +91,7 @@ vector<Musicmember> new_list(){
   // start of a new musiclist with bandname input
   cout << "Please enter the bandname: ";
   getline(cin, bandname);
+  cout << "bandname = " << bandname;
 
   // followed by one or more genre(s)
   cout << endl << "Now enter ONE genre of the band: ";
@@ -94,45 +101,61 @@ vector<Musicmember> new_list(){
   cout << "Do you want to more genres? ";
   cin >> input;
   if(input == "yes" || input == "Yes"){
-    cout << "How many more genres do you want do add?" ;
+    cout << "How many more genres do you want do add? " << endl;
     cin >> number_new_genres;
-    genre_size = genres.size() + number_new_genres;
-    genres.resize(genre_size);
-    for (int i = 0; i < number_new_genres; i++) {
-      cout << "Enter one of the new genres: ";
-      getline(cin, new_genre);
-      genres.push_back(new_genre);
+    if(number_new_genres > 0){
+      genre_size = genres.size() + number_new_genres;
+      genres.resize(genre_size);
+      for (int i = 0; i < number_new_genres; i++) {
+        cout << "Enter one of the new genres: ";
+        getline(cin, new_genre);
+        genres.push_back(new_genre);
+      }
     }
   }
 
     // now coming to the tricky part with adding the bandinfo
     // might need to change that cool trick, since it might make saving and
     // loading impossibly hart to programm... we'll see
-    cout << "Now Enter the bandinfo. Whenever you want a new line to " << endl;
-    cout << "start simply press enter. If you are finished wrinting enter END";
+    cout << "Now enter the bandinfo. Whenever you want a new line to " << endl;
+    cout << "start simply press enter. If you are finished wrinting enter END.";
     cout << endl;
-    while(new_bandinfo != "END\n"){
-      getline(cin, new_bandinfo);
-      // new_bandinfo.append("\n");
+    getline(cin, input);
+    while(input != "END"){
+      getline(cin, input);
+      new_bandinfo.append(input);
+      new_bandinfo.append("\n");
     }
 
-    // to delete the last new line
-    new_bandinfo.pop_back();
+    // to delete the last new line and the END
+    for(int i = 0; i < 5; i++){
+      new_bandinfo.pop_back();
+    }
+    cout << endl << "Bandinfo:";
+    cout << endl << new_bandinfo << endl;
 
     // Start of new songlist, first starting with ONE song, asks to be expanded
     // after first song.
     cout << "Now it's time to add a song list. Starting with ONE song title: ";
     cout << endl;
     cin >> new_songname;
+
+    // Songinfo
     cout << "Now Enter the songinfo. Whenever you want a new line to " << endl;
-    cout << "start simply press enter. If you are finished writing enter END";
+    cout << "start simply press enter. If you are finished writing enter END.";
     cout << endl;
-    while(new_songinfo != "END\n"){
-      getline(cin, new_songinfo);
-      // new_songinfo.append("\n");
+    getline(cin, input);
+    while(input != "END"){
+      getline(cin, input);
+      new_songinfo.append(input);
+      new_songinfo.append("\n");
     }
-    // to delete the last new line
-    new_songinfo.pop_back();
+
+    // to delete the last new line and the END
+    for(int i = 0; i < 5; i++){
+      new_songinfo.pop_back();
+    }
+
 
     // adding the info in which album the song was published
     cout << "Time to add on which album this song was released: ";
@@ -172,13 +195,18 @@ vector<Musicmember> new_list(){
         cout << "Time to add a new song to the list. Songtitle: ";
         cin >> new_songname;
         cout << "Now Enter the songinfo. Whenever you want a new line to " << endl;
-        cout << "start simply press enter. If you are finished writing enter END";
+        cout << "start simply press enter. If you are finished writing enter END.";
+        cout << endl;
+        getline(cin, input);
         while(input != "END"){
-          getline(cin, new_songinfo);
+          getline(cin, input);
+          new_songinfo.append(input);
           new_songinfo.append("\n");
         }
-        // to delete the last new line
-        new_songinfo.pop_back();
+        // to delete the last new line and the END
+        for(int i = 0; i < 5; i++){
+          new_songinfo.pop_back();
+        }
 
         // adding the info in which album the song was published
         cout << "Time to add on which album this song was released: ";
