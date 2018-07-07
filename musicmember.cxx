@@ -228,6 +228,8 @@ vector<Musicmember> new_list(){
         else{
           new_prio_bool = false;
         }
+
+        // appending the i-th new song to the song list
         songlist.push_back(song_init(new_songname, new_songinfo, new_album,
                                      new_spotifylink, new_youtubelink,
                                      new_prio_bool));
