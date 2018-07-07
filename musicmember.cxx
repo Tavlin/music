@@ -67,7 +67,16 @@ vector<Musicmember> new_list(){
   string bandname;
   string new_genre;
   string new_bandinfo;
+  string new_songname;
+  string new_songinfo;
+  string new_album;
+  string new_spotifylink;
+  string new_youtubelink;
+  string new_prio;
+  bool new_prio_bool;
+
   int number_new_genres;
+  int number_new_songs;
   int genre_size = 0;
   vector<string> genres;
   string bandinfo;
@@ -75,11 +84,12 @@ vector<Musicmember> new_list(){
 
   // start of a new musiclist with bandname input
   cout << "Please enter the bandname: ";
-  cin >> bandname;
+  getline(cin, bandname);
 
   // followed by one or more genre(s)
   cout << endl << "Now enter ONE genre of the band: ";
-  cin >> new_genre;
+  getline(cin, new_genre);
+  genres.resize(1);
   genres = {new_genre};
   cout << "Do you want to more genres? ";
   cin >> input;
@@ -90,21 +100,115 @@ vector<Musicmember> new_list(){
     genres.resize(genre_size);
     for (int i = 0; i < number_new_genres; i++) {
       cout << "Enter one of the new genres: ";
-      cin >> new_genre;
+      getline(cin, new_genre);
       genres.push_back(new_genre);
     }
-
-    // now coming to the tricky part with adding the bandinfo
-    cout << "Now Enter the bandinfo. Whenever you want a new line to " << endl;
-    cout << "start simply press enter. if you are finished wrinting enter END";
-    while(input != "END"){
-      cin >> new_bandinfo;
-      new_bandinfo.append("\n");
-    }
-    // to delete the last new line
-    new_bandinfo.pop_back();
-    
   }
 
+    // now coming to the tricky part with adding the bandinfo
+    // might need to change that cool trick, since it might make saving and
+    // loading impossibly hart to programm... we'll see
+    cout << "Now Enter the bandinfo. Whenever you want a new line to " << endl;
+    cout << "start simply press enter. If you are finished wrinting enter END";
+    cout << endl;
+    while(new_bandinfo != "END\n"){
+      getline(cin, new_bandinfo);
+      // new_bandinfo.append("\n");
+    }
+
+    // to delete the last new line
+    new_bandinfo.pop_back();
+
+    // Start of new songlist, first starting with ONE song, asks to be expanded
+    // after first song.
+    cout << "Now it's time to add a song list. Starting with ONE song title: ";
+    cout << endl;
+    cin >> new_songname;
+    cout << "Now Enter the songinfo. Whenever you want a new line to " << endl;
+    cout << "start simply press enter. If you are finished writing enter END";
+    cout << endl;
+    while(new_songinfo != "END\n"){
+      getline(cin, new_songinfo);
+      // new_songinfo.append("\n");
+    }
+    // to delete the last new line
+    new_songinfo.pop_back();
+
+    // adding the info in which album the song was published
+    cout << "Time to add on which album this song was released: ";
+    cin >> new_album;
+
+    //time for the important stuff, the ducking links:
+    cout << "It's finally time to enter the links. Start with Spotify: " << endl;
+    cin >> new_spotifylink;
+
+    cout << "Followed by the YouTube-URL: " << endl;
+    cin >> new_youtubelink;
+
+    // setting if the song has prio or not.
+    cout << "has this song a high priority for you (yes/no)?";
+    cin >> new_prio;
+    if(new_prio == "yes" || new_prio == "Yes" || new_prio == "YES" || new_prio == "y"){
+      new_prio_bool = true;
+    }
+    else{
+      new_prio_bool = false;
+    }
+
+    // actual initializing of the first song in this song list coressponding
+    // to the current band.
+    songlist.resize(1);
+    songlist[0] = song_init(new_songname, new_songinfo, new_album,
+                            new_spotifylink, new_youtubelink, new_prio_bool);
+
+    cout << "Do you want to add more songs to the song list (yes/no)?";
+    cin >> input;
+    if(input == "yes" || input == "Yes" || input == "YES" || input == "y"){
+      cout << "How many songs would you like to add?";
+      cin >> number_new_songs;
+
+      // adding multiple new songs to the song list like before
+      for (int i = 0; i < number_new_songs; i++) {
+        cout << "Time to add a new song to the list. Songtitle: ";
+        cin >> new_songname;
+        cout << "Now Enter the songinfo. Whenever you want a new line to " << endl;
+        cout << "start simply press enter. If you are finished writing enter END";
+        while(input != "END"){
+          getline(cin, new_songinfo);
+          new_songinfo.append("\n");
+        }
+        // to delete the last new line
+        new_songinfo.pop_back();
+
+        // adding the info in which album the song was published
+        cout << "Time to add on which album this song was released: ";
+        cin >> new_album;
+
+        //time for the important stuff, the ducking links:
+        cout << "It's finally time to enter the links. Start with Spotify: " << endl;
+        cin >> new_spotifylink;
+
+        cout << "Followed by the YouTube-URL: " << endl;
+        cin >> new_youtubelink;
+
+        // setting if the song has prio or not.
+        cout << "has this song a high priority for you (yes/no)?";
+        cin >> new_prio;
+        if(new_prio == "yes" || new_prio == "Yes" || new_prio == "YES" || new_prio == "y"){
+          new_prio_bool = true;
+        }
+        else{
+          new_prio_bool = false;
+        }
+        songlist.push_back(song_init(new_songname, new_songinfo, new_album,
+                                     new_spotifylink, new_youtubelink,
+                                     new_prio_bool));
+
+      }
+      cout << "So this was all to start a new music list. Done for now" << endl;
+      Musicmember new_musicmember(bandname, genres, bandinfo, songlist);
+      newlist = {new_musicmember};
+
+    }
   return newlist;
 }

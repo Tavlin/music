@@ -90,4 +90,5 @@ class Musicmember
 };
 void search_genre(vector<Musicmember> list, string searched_genre);
 void print_commands();
+vector<Musicmember> new_list();
 #endif
