@@ -1,7 +1,7 @@
 # music
-some coding for music
+Some coding to save, load and "search" a list of music.
 
-currently under construction so to say
+Currently under heavy constructions whenver I find some time
 
 Switching from C++ to python, since python has pickle as a standard libary
 which makes saving and loading complex types/ classes very easy, while C++
