@@ -130,26 +130,26 @@ released: ")
     return newlist
 
 
-def safe(list, file_Name="new list"):
+def safe(list, file_name="new list"):
     """function to safe the current list in a pickle.
     """
     # open the file for writing
-    fileObject = open(file_Name, 'wb')
+    fileObject = open(file_name, 'wb')
 
-    # this writes the object a to the
-    # file named 'testfile'
+    # this writes the object (music)list to the file named file_name
     pk.dump(list, fileObject)
 
-    # here we close the fileObject
+    # close the fileObject
     fileObject.close()
 
 
-def load(file_Name="new list"):
+def load(file_name="new list"):
     """function to load a pickled list.
     """
-    # we open the file for reading
-    fileObject = open(file_Name, 'r')
-    # load the object from the file into var b
+    # open the file for reading
+    fileObject = open(file_name, 'r')
+
+    # load the object from the file into var list
     list = pk.load(fileObject)
     return list
     fileObject.close()
