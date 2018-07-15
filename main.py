@@ -1,4 +1,3 @@
-# Fibonacci numbers module
 import extrafunctions as ef
 status = 1
 
@@ -14,10 +13,10 @@ def main():
             break
 
         elif input == "help" or input == "Help":
-            pass  # print_commands()
+            ef.print_commands()
 
         elif input == "creat list" or input == "new list":
-            pass  # new_list()
+            ef.new_list()
 
 
 if __name__ == "__main__":
